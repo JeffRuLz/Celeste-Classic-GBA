@@ -9,7 +9,7 @@ This is a port of Celeste Classic to the Game Boy Advance.
 
 It's almost a direct conversion with minor graphical alterations.
 
-### game credits:
+### original game credits:
 
 Matt Thorson - design and audio
 
@@ -22,3 +22,7 @@ noelfb.com
 ### Play the original game and view its source here:
 
 lexaloffle.com/bbs/?tid=2145
+
+## Building
+
+Install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and select "GBA Development" during installation. Then run "make" in a command prompt.
