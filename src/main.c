@@ -280,6 +280,7 @@ Spring springs[MAX_SPRINGS] = { 0 };
 Point room = { 0, 0 };
 u8 freeze = 0;
 u8 shake = 0;
+bool cheated = false;
 bool can_shake = true;
 bool will_restart = false;
 u8 delay_restart = 0;
@@ -584,6 +585,7 @@ void title_screen()
 	max_djump = 1;
 	start_game = false;
 	start_game_flash = 0;
+	cheated = false;
 
 	new_bg = false;
 
@@ -1686,6 +1688,17 @@ void flag_draw(Flag* this)
 		{
 			char str[16] = "deaths:9999";
 			s8 xoff = 4;
+			
+			if (cheated)
+			{
+				str[0] = 'c';
+				str[1] = 'h';
+				str[2] = 'e';
+				str[3] = 'a';
+				str[4] = 't';
+				str[5] = 'e';
+				str[6] = 'd';
+			}
 
 			if (deaths < 9999)
 			{
@@ -2195,12 +2208,16 @@ void _update()
 			start_game_flash = 50;
 			start_game = true;
 			sfx(38);
+			if (btn(KEY_L) && btn(KEY_R))
+				cheated = true;
 		}
 
 		if (start_game) {
 			start_game_flash -= 1;
 			if (start_game_flash <= -30) {
 				begin_game();
+				if (cheated)
+					max_djump = 2;
 			}
 		}
 	}
