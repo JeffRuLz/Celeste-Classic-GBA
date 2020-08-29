@@ -280,6 +280,7 @@ Spring springs[MAX_SPRINGS] = { 0 };
 Point room = { 0, 0 };
 u8 freeze = 0;
 u8 shake = 0;
+bool can_shake = true;
 bool will_restart = false;
 u8 delay_restart = 0;
 bool got_fruit[32] = { false };
@@ -2117,7 +2118,7 @@ void _update()
 	if (shake > 0) {
 		shake -= 1;
 		camera(0,0);
-		if (shake > 0) {
+		if (can_shake && shake > 0) {
 			camera(-2-rndi(5),-2+rndi(5));
 		}
 	}
@@ -2543,6 +2544,9 @@ int main(void)
 
 		//if (btnp(KEY_SELECT))
 		//	next_room();
+	
+		if (btnp(KEY_SELECT))
+			can_shake = !can_shake;
 
 		if (btnp(KEY_START))
 		{
