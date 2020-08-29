@@ -590,6 +590,7 @@ void title_screen()
 	music(40,0,7);
 
 	load_room(7,3);
+	player_spawn.active = false;
 }
 
 void begin_game()
@@ -2543,11 +2544,8 @@ int main(void)
 		kdown = keysDown();
 
 		//if (btnp(KEY_SELECT))
-		//	next_room();
-	
-		if (btnp(KEY_SELECT))
-			can_shake = !can_shake;
-
+		//	next_room();		
+		
 		if (btnp(KEY_START))
 		{
 			if (level_index() < 30)
@@ -2567,6 +2565,20 @@ int main(void)
 				update_screen();
 	
 			_update();
+			
+			//toggle screen shake
+			if (btnp(KEY_SELECT))
+				can_shake = !can_shake;
+		}
+		
+		//reset key combo
+		if (btn(KEY_SELECT) && btn(KEY_START) && btn(KEY_L) && btn(KEY_R))
+		{
+			if (!is_title())
+			{
+				paused = false;
+				title_screen();
+			}
 		}
 
 		//draw
@@ -2574,7 +2586,7 @@ int main(void)
 		mmFrame();
 
 		if (!paused)
-			_draw();
+			_draw();		
 	}
 
 	return 0;
