@@ -7,10 +7,10 @@
 
 
 #define FLAGS_SIZE 256
-const unsigned char FLAGS_DATA[FLAGS_SIZE];
+extern const unsigned char FLAGS_DATA[FLAGS_SIZE];
 
 #define MAP_SIZE 8192
-const unsigned short MAP_DATA[MAP_SIZE];
+extern const unsigned short MAP_DATA[MAP_SIZE];
 
 
 //-- Graphics --
