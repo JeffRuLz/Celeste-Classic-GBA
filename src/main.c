@@ -1697,7 +1697,7 @@ void flag_draw(Flag* this)
 				str[3] = 'a';
 				str[4] = 't';
 				str[5] = 'e';
-				str[6] = 'd';
+				str[6] = 'r';
 			}
 
 			if (deaths < 9999)
