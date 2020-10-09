@@ -685,7 +685,7 @@ void __init()
 
 void title_screen()
 {
-        sram_erase();
+	sram_erase();
 
 	for (u8 i = 0; i < 32; i++)
 		got_fruit[i] = false;
