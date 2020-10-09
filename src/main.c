@@ -242,9 +242,11 @@ typedef struct
 	int magic;
 	u8 seconds;
 	u8 minutes;
-	u16 deaths;
-	Point room;
 	s8 music;
+	u8 max_djump;
+	bool new_bg;
+	Point room;
+	u16 deaths;
 } ALIGN(4) SaveData;
 
 
@@ -607,6 +609,8 @@ int sram_save()
 	save.deaths = deaths;
 	save.room = room;
 	save.music = current_music;
+	save.new_bg = new_bg;
+	save.max_djump = max_djump;
 
 	u8* save_mem = CARTRIDGE_RAM;
 
@@ -672,6 +676,9 @@ void __init()
 		deaths = previous_game.deaths;
 		music_timer = 0;
 		start_game = false;
+		new_bg = previous_game.new_bg;
+		max_djump = previous_game.max_djump;
+		player.djump = previous_game.max_djump;
 
 		music(previous_game.music, 500, 7);
 		current_music = previous_game.music;
