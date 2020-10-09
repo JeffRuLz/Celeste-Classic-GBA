@@ -237,6 +237,9 @@ typedef struct
 #define SAVE_DATA_MAGIC 0xAAAA
 
 
+typedef bool fruit_set[32];
+
+
 typedef struct
 {
 	int magic;
@@ -245,6 +248,8 @@ typedef struct
 	s8 music;
 	u8 max_djump;
 	bool new_bg;
+	bool cheated;
+        fruit_set got_fruit;
 	Point room;
 	u16 deaths;
 	u16 music_fade_len;
@@ -305,7 +310,7 @@ bool cheated = false;
 bool can_shake = true;
 bool will_restart = false;
 u8 delay_restart = 0;
-bool got_fruit[32] = { false };
+fruit_set got_fruit = { false };
 bool has_dashed = false;
 u8 sfx_timer = 0;
 bool has_key = false;
@@ -614,6 +619,12 @@ int sram_save()
 	save.music_fade_len = current_music_fade_len;
 	save.new_bg = new_bg;
 	save.max_djump = max_djump;
+	save.cheated = cheated;
+
+	for (int i = 0; i < 32; ++i)
+	{
+		save.got_fruit[i] = got_fruit[i];
+	}
 
 	u8* save_mem = CARTRIDGE_RAM;
 
@@ -682,6 +693,12 @@ void __init()
 		new_bg = previous_game.new_bg;
 		max_djump = previous_game.max_djump;
 		player.djump = previous_game.max_djump;
+		cheated = previous_game.cheated;
+
+		for (int i = 0; i < 32; ++i)
+		{
+			got_fruit[i] = previous_game.got_fruit[i];
+		}
 
 		music(previous_game.music, previous_game.music_fade_len, 7);
 		current_music_fade_len = previous_game.music_fade_len;
@@ -954,6 +971,7 @@ void kill_player()
 	sfx_timer = 12;
 	sfx(0);
 	deaths += 1;
+	sram_save();
 	shake = 10;
 	player.obj.active = false;
 	for (u8 dir = 0; dir <= 7; dir++)
