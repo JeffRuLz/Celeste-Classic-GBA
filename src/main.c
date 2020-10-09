@@ -234,6 +234,18 @@ typedef struct
 } ALIGN(4) Spring;
 
 
+#define SAVE_DATA_MAGIC 0xAAAA
+
+
+typedef struct
+{
+        int magic;
+        u8 seconds;
+        u8 minutes;
+        u16 deaths;
+        Point room;
+} ALIGN(4) SaveData;
+
 //-- object lists --
 //------------------
 Big_Chest big_chest = { 0 };
@@ -555,6 +567,79 @@ void draw_time(u8 x, u8 y)
 //-----------------
 void title_screen();
 
+
+#define CARTRIDGE_RAM ((u8*)0x0E000000)
+
+
+int sram_load(SaveData* output)
+{
+	// NOTE: if you try to read/write sram from a base pointer + offset, the
+	// compiler is not guaranteed to emit the correct asm instructions for
+	// interacting with the save memory. You should put the target cartridge
+	// address in a local variable.
+	u8* save_mem = CARTRIDGE_RAM;
+
+	for (int i = 0; i < sizeof *output; ++i)
+	{
+		((u8*)output)[i] = *save_mem++;
+	}
+
+	if (output->magic == SAVE_DATA_MAGIC)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+
+int sram_save()
+{
+	SaveData save;
+	save.magic = SAVE_DATA_MAGIC;
+	save.seconds = seconds;
+	save.minutes = minutes;
+	save.deaths = deaths;
+	save.room = room;
+
+	u8* save_mem = CARTRIDGE_RAM;
+
+	// Note: cartridge ram has an 8-bit data bus, so save data _must_ be
+	// written one byte at a time.
+	for (int i = 0; i < sizeof save; ++i)
+	{
+		*save_mem++ = ((u8*)&save)[i];
+	}
+
+	SaveData checksum;
+	if (!sram_load(&checksum))
+	{
+		return 0;
+	}
+
+	for (int i = 0; i < sizeof checksum; ++i)
+	{
+		if (*((u8*)&checksum) != *((u8*)&save))
+		{
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+
+void sram_erase()
+{
+	u8* save_mem = CARTRIDGE_RAM;
+
+	for (int i = 0; i < sizeof(SaveData); ++i)
+	{
+		*save_mem++ = 0;
+	}
+}
+
+
 void __init()
 {
 	for (u8 i = 0; i < MAX_PARTICLES; i++)
@@ -571,11 +656,40 @@ void __init()
 		this->c = 6+flr(0.5+rnd(1));
 	}
 
-	title_screen();
+        SaveData previous_game = {0};
+
+        if (sram_load(&previous_game))
+        {
+                frames = 0;
+                seconds = previous_game.seconds;
+                minutes = previous_game.minutes;
+                music_timer = 0;
+                start_game = false;
+
+                if (room.x == 2 && room.y == 1) {
+	        	music(30,500,7);
+                } else if (room.x == 3 && room.y == 1) {
+                        music(20,500,7);
+                } else if (room.x == 4 && room.y == 2) {
+                        music(30,500,7);
+                } else if (room.x == 5 && room.y == 3) {
+                        music(30,500,7);
+                } else {
+                        music(0,0,7);
+                }
+
+                load_room(previous_game.room.x, previous_game.room.y);
+        }
+        else
+        {
+            title_screen();
+        }
 }
 
 void title_screen()
 {
+        sram_erase();
+
 	for (u8 i = 0; i < 32; i++)
 		got_fruit[i] = false;
 	frames = 0;
@@ -2099,6 +2213,8 @@ void next_room()
 		load_room(0,room.y+1);
 	else
 		load_room(room.x+1,room.y);
+
+        sram_save();
 }
 
 
