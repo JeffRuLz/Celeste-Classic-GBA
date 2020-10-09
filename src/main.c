@@ -243,6 +243,7 @@ typedef struct
 	u8 seconds;
 	u8 minutes;
 	s8 music;
+	u16 music_fade_len;
 	u8 max_djump;
 	bool new_bg;
 	Point room;
@@ -251,6 +252,7 @@ typedef struct
 
 
 s8 current_music = 0;
+u16 current_music_fade_len = 0;
 
 
 //-- object lists --
@@ -609,6 +611,7 @@ int sram_save()
 	save.deaths = deaths;
 	save.room = room;
 	save.music = current_music;
+	save.music_fade_len = current_music_fade_len;
 	save.new_bg = new_bg;
 	save.max_djump = max_djump;
 
@@ -680,7 +683,8 @@ void __init()
 		max_djump = previous_game.max_djump;
 		player.djump = previous_game.max_djump;
 
-		music(previous_game.music, 500, 7);
+		music(previous_game.music, previous_game.music_fade_len, 7);
+		current_music_fade_len = previous_game.music_fade_len;
 		current_music = previous_game.music;
 
 		load_room(previous_game.room.x, previous_game.room.y);
@@ -723,6 +727,7 @@ void begin_game()
 	start_game = false;
 	music(0,0,7);
 	current_music = 0;
+	current_music_fade_len = 0;
 	load_room(0,0);
 }
 
@@ -2208,15 +2213,19 @@ void next_room()
 	if (room.x == 2 && room.y == 1) {
 		music(30,500,7);
 		current_music = 30;
+		current_music_fade_len = 500;
 	} else if (room.x == 3 && room.y == 1) {
 		music(20,500,7);
 		current_music = 20;
+		current_music_fade_len = 500;
 	} else if (room.x == 4 && room.y == 2) {
 		music(30,500,7);
 		current_music = 30;
+		current_music_fade_len = 500;
 	} else if (room.x == 5 && room.y == 3) {
 		music(30,500,7);
 		current_music = 30;
+		current_music_fade_len = 500;
 	}
 
 	if (room.x == 7)
@@ -2244,6 +2253,8 @@ void _update()
 		music_timer -= 1;
 		if (music_timer <= 0) {
 			music(10,0,7);
+			current_music = 10;
+			current_music_fade_len = 0;
 		}
 	}
 
