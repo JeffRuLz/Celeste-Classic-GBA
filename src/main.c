@@ -2214,7 +2214,7 @@ void next_room()
 	else
 		load_room(room.x+1,room.y);
 
-        sram_save();
+	sram_save();
 }
 
 
