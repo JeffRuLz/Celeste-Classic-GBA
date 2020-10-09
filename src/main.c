@@ -656,34 +656,34 @@ void __init()
 		this->c = 6+flr(0.5+rnd(1));
 	}
 
-        SaveData previous_game = {0};
+	SaveData previous_game = {0};
 
-        if (sram_load(&previous_game))
-        {
-                frames = 0;
-                seconds = previous_game.seconds;
-                minutes = previous_game.minutes;
-                music_timer = 0;
-                start_game = false;
+	if (sram_load(&previous_game))
+	{
+		frames = 0;
+		seconds = previous_game.seconds;
+		minutes = previous_game.minutes;
+		music_timer = 0;
+		start_game = false;
 
-                if (room.x == 2 && room.y == 1) {
-	        	music(30,500,7);
-                } else if (room.x == 3 && room.y == 1) {
-                        music(20,500,7);
-                } else if (room.x == 4 && room.y == 2) {
-                        music(30,500,7);
-                } else if (room.x == 5 && room.y == 3) {
-                        music(30,500,7);
-                } else {
-                        music(0,0,7);
-                }
+		if (room.x == 2 && room.y == 1) {
+			music(30,500,7);
+		} else if (room.x == 3 && room.y == 1) {
+			music(20,500,7);
+		} else if (room.x == 4 && room.y == 2) {
+			music(30,500,7);
+		} else if (room.x == 5 && room.y == 3) {
+			music(30,500,7);
+		} else {
+			music(0,0,7);
+		}
 
-                load_room(previous_game.room.x, previous_game.room.y);
-        }
-        else
-        {
-            title_screen();
-        }
+		load_room(previous_game.room.x, previous_game.room.y);
+	}
+	else
+	{
+		title_screen();
+	}
 }
 
 void title_screen()
