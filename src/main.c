@@ -239,12 +239,17 @@ typedef struct
 
 typedef struct
 {
-        int magic;
-        u8 seconds;
-        u8 minutes;
-        u16 deaths;
-        Point room;
+	int magic;
+	u8 seconds;
+	u8 minutes;
+	u16 deaths;
+	Point room;
+	s8 music;
 } ALIGN(4) SaveData;
+
+
+s8 current_music = 0;
+
 
 //-- object lists --
 //------------------
@@ -666,17 +671,8 @@ void __init()
 		music_timer = 0;
 		start_game = false;
 
-		if (room.x == 2 && room.y == 1) {
-			music(30,500,7);
-		} else if (room.x == 3 && room.y == 1) {
-			music(20,500,7);
-		} else if (room.x == 4 && room.y == 2) {
-			music(30,500,7);
-		} else if (room.x == 5 && room.y == 3) {
-			music(30,500,7);
-		} else {
-			music(0,0,7);
-		}
+		music(previous_game.music, 500, 7);
+		current_music = previous_game.music;
 
 		load_room(previous_game.room.x, previous_game.room.y);
 	}
@@ -717,6 +713,7 @@ void begin_game()
 	music_timer = 0;
 	start_game = false;
 	music(0,0,7);
+	current_music = 0;
 	load_room(0,0);
 }
 
@@ -2201,12 +2198,16 @@ void next_room()
 {
 	if (room.x == 2 && room.y == 1) {
 		music(30,500,7);
+		current_music = 30;
 	} else if (room.x == 3 && room.y == 1) {
 		music(20,500,7);
+		current_music = 20;
 	} else if (room.x == 4 && room.y == 2) {
 		music(30,500,7);
+		current_music = 30;
 	} else if (room.x == 5 && room.y == 3) {
 		music(30,500,7);
+		current_music = 30;
 	}
 
 	if (room.x == 7)
