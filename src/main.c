@@ -606,6 +606,7 @@ int sram_save()
 	save.minutes = minutes;
 	save.deaths = deaths;
 	save.room = room;
+	save.music = current_music;
 
 	u8* save_mem = CARTRIDGE_RAM;
 
