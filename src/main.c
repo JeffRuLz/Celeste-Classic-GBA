@@ -249,7 +249,7 @@ typedef struct
 	u8 max_djump;
 	bool new_bg;
 	bool cheated;
-        fruit_set got_fruit;
+	fruit_set got_fruit;
 	Point room;
 	u16 deaths;
 	u16 music_fade_len;
