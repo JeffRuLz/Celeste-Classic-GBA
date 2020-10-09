@@ -669,7 +669,7 @@ void __init()
 		frames = 0;
 		seconds = previous_game.seconds;
 		minutes = previous_game.minutes;
-                deaths = previous_game.deaths;
+		deaths = previous_game.deaths;
 		music_timer = 0;
 		start_game = false;
 
