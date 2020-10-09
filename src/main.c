@@ -243,11 +243,11 @@ typedef struct
 	u8 seconds;
 	u8 minutes;
 	s8 music;
-	u16 music_fade_len;
 	u8 max_djump;
 	bool new_bg;
 	Point room;
 	u16 deaths;
+	u16 music_fade_len;
 } ALIGN(4) SaveData;
 
 
