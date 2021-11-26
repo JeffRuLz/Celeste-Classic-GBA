@@ -13,7 +13,7 @@ It's almost a direct conversion with minor graphical alterations.
 
 Maddy Thorson - design and audio
 
-mattmakesgames.com
+[maddymakesgames.com](https://www.maddymakesgames.com)
 
 Noel Berry - code and art
 
