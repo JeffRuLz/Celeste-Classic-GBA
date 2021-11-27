@@ -1,5 +1,5 @@
 //-- ~celeste~
-//-- matt thorson + noel berry
+//-- maddy thorson + noel berry
 
 #include <gba_interrupt.h>
 #include <gba_video.h>
@@ -2242,7 +2242,7 @@ void _draw()
 		pal(1,0,PAL_BG); //hide clouds
 
 		print("press start",42,80,5);
-		print("matt thorson",40,96,5);
+		print("maddy thorson",38,96,5);
 		print("noel berry",44,102,5);
 	}
 

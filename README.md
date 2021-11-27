@@ -11,9 +11,9 @@ It's almost a direct conversion with minor graphical alterations.
 
 ### original game credits:
 
-Matt Thorson - design and audio
+Maddy Thorson - design and audio
 
-mattmakesgames.com
+[maddymakesgames.com](https://www.maddymakesgames.com)
 
 Noel Berry - code and art
 
