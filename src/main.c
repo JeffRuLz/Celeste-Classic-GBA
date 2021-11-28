@@ -1912,7 +1912,7 @@ void room_title_draw(Room_Title* this)
 	}
 	else if (this->delay < 0) {
 		//rectfill
-		rectfill(1,1,5,1,0);
+		//rectfill(1,1,5,1,0);
 		rectfill(3,7,10,2,0);
 
 		if (room.x == 3 && room.y == 1) {
@@ -1932,6 +1932,12 @@ void room_title_draw(Room_Title* this)
 		}
 
 		draw_time(4+4,4+4);
+		//black rectangle behind timer
+		spr(141, 12, 8, 0, PAL_SPROVER, 0, 0);
+		spr(141, 20, 8, 0, PAL_SPROVER, 0, 0);
+		spr(141, 28, 8, 0, PAL_SPROVER, 0, 0);
+		spr(141, 36, 8, 0, PAL_SPROVER, 0, 0);
+		spr(141, 37, 8, 0, PAL_SPROVER, 0, 0);
 	}
 }
 
@@ -2235,7 +2241,7 @@ void _draw()
 	pal(0,0,0);
 
 	//pal(0,5,PAL_BG);
-	pal(15,0,PAL_BG);
+	pal(15,0,PAL_BG | PAL_SPROVER);
 
 	//-- credits
 	if (is_title()) {
