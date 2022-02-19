@@ -67,7 +67,7 @@ void pal(u8 c0, u8 c1, u8 p)
 			if (p == 0 || p & PAL_TEXT)
 				SPRITE_PALETTE[32 + i] = palette[i];
 
-			if (p == 0 || p & PAL_SPROVER)
+			if (p == 0 || p & PAL_OVERLAY)
 				SPRITE_PALETTE[48 + i] = palette[i];
 		}
 	}
@@ -88,7 +88,7 @@ void pal(u8 c0, u8 c1, u8 p)
 		if (p & PAL_TEXT)
 			SPRITE_PALETTE[32 + c0] = palette[c1];
 
-		if (p & PAL_SPROVER)
+		if (p & PAL_OVERLAY)
 			SPRITE_PALETTE[48 + c0] = palette[c1];
 	}
 }
@@ -160,7 +160,7 @@ void spr(u16 n, s16 x, s16 y, u8 layer, u8 palette, bool flip_x, bool flip_y)
 		obj->attr2 |= ATTR2_PALETTE(1);
 	else if (palette & PAL_TEXT)
 		obj->attr2 |= ATTR2_PALETTE(2);
-	else if (palette & PAL_SPROVER)
+	else if (palette & PAL_OVERLAY)
 		obj->attr2 |= ATTR2_PALETTE(3);
 
 	//flip

@@ -1933,11 +1933,11 @@ void room_title_draw(Room_Title* this)
 
 		draw_time(4+4,4+4);
 		//black rectangle behind timer
-		spr(141, 12, 8, 0, PAL_SPROVER, 0, 0);
-		spr(141, 20, 8, 0, PAL_SPROVER, 0, 0);
-		spr(141, 28, 8, 0, PAL_SPROVER, 0, 0);
-		spr(141, 36, 8, 0, PAL_SPROVER, 0, 0);
-		spr(141, 37, 8, 0, PAL_SPROVER, 0, 0);
+		spr(141, 12, 8, 0, PAL_OVERLAY, 0, 0);
+		spr(141, 20, 8, 0, PAL_OVERLAY, 0, 0);
+		spr(141, 28, 8, 0, PAL_OVERLAY, 0, 0);
+		spr(141, 36, 8, 0, PAL_OVERLAY, 0, 0);
+		spr(141, 37, 8, 0, PAL_OVERLAY, 0, 0);
 	}
 }
 
@@ -2241,7 +2241,7 @@ void _draw()
 	pal(0,0,0);
 
 	//pal(0,5,PAL_BG);
-	pal(15,0,PAL_BG | PAL_SPROVER);
+	pal(15,0,PAL_BG | PAL_OVERLAY);
 
 	//-- credits
 	if (is_title()) {
